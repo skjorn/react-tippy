@@ -182,7 +182,8 @@ class Tooltip extends Component {
     }
     if (!this.props.disabled) {
       this.tooltipDOM.setAttribute('title', this.props.title);
-      this.tippy = tippy(this.tooltipDOM, {
+
+      const settings = {
         disabled: this.props.disabled,
         position: this.props.position,
         animation: this.props.animation,
@@ -220,7 +221,12 @@ class Tooltip extends Component {
         reactInstance: this.props.useContext ? this : undefined,
         performance: true,
         html: this.props.rawTemplate ? this.props.rawTemplate : undefined,
-      });
+      };
+      if (this.props.appendTo) {
+        settings.appendTo = this.props.appendTo;
+      }
+
+      this.tippy = tippy(this.tooltipDOM, settings);
       if (this.props.open) {
         this.showTooltip();
       }

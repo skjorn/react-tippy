@@ -16,9 +16,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -595,7 +595,8 @@ var Tooltip = function (_Component) {
       }
       if (!this.props.disabled) {
         this.tooltipDOM.setAttribute('title', this.props.title);
-        this.tippy = (0, _tippy2.default)(this.tooltipDOM, {
+
+        var settings = {
           disabled: this.props.disabled,
           position: this.props.position,
           animation: this.props.animation,
@@ -633,7 +634,12 @@ var Tooltip = function (_Component) {
           reactInstance: this.props.useContext ? this : undefined,
           performance: true,
           html: this.props.rawTemplate ? this.props.rawTemplate : undefined
-        });
+        };
+        if (this.props.appendTo) {
+          settings.appendTo = this.props.appendTo;
+        }
+
+        this.tippy = (0, _tippy2.default)(this.tooltipDOM, settings);
         if (this.props.open) {
           this.showTooltip();
         }

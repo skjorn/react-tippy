@@ -149,6 +149,7 @@ class App extends Component {
           trigger="mouseenter"
           duration={3000}
           unmountHTMLWhenHide
+          appendTo={() => document.querySelector('.App')}
         >
           <p>
             Hover here to show popup
