@@ -208,52 +208,6 @@ function prefix(property) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = find;
-/**
-* Ponyfill for Array.prototype.find
-* @param {Array} arr
-* @param {Function} checkFn
-* @return item in the array
-*/
-function find(arr, checkFn) {
-  if (Array.prototype.find) {
-    return arr.find(checkFn);
-  }
-
-  // use `filter` as fallback
-  return arr.filter(checkFn)[0];
-}
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = getCorePlacement;
-/**
-* Returns the non-shifted placement (e.g., 'bottom-start' => 'bottom')
-* @param {String} placement
-* @return {String}
-*/
-function getCorePlacement(placement) {
-  return placement.replace(/-.+/, '');
-}
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports.default = closest;
 
 var _matches = __webpack_require__(8);
@@ -276,6 +230,52 @@ function closest(element, parentSelector) {
   };
 
   return _closest.call(element, parentSelector);
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = find;
+/**
+* Ponyfill for Array.prototype.find
+* @param {Array} arr
+* @param {Function} checkFn
+* @return item in the array
+*/
+function find(arr, checkFn) {
+  if (Array.prototype.find) {
+    return arr.find(checkFn);
+  }
+
+  // use `filter` as fallback
+  return arr.filter(checkFn)[0];
+}
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getCorePlacement;
+/**
+* Returns the non-shifted placement (e.g., 'bottom-start' => 'bottom')
+* @param {String} placement
+* @return {String}
+*/
+function getCorePlacement(placement) {
+  return placement.replace(/-.+/, '');
 }
 
 /***/ }),
@@ -387,6 +387,10 @@ var _react2 = _interopRequireDefault(_react);
 var _tippy = __webpack_require__(30);
 
 var _tippy2 = _interopRequireDefault(_tippy);
+
+var _closest = __webpack_require__(2);
+
+var _closest2 = _interopRequireDefault(_closest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -636,7 +640,11 @@ var Tooltip = function (_Component) {
           html: this.props.rawTemplate ? this.props.rawTemplate : undefined
         };
         if (this.props.appendTo) {
-          settings.appendTo = this.props.appendTo;
+          if (typeof this.props.appendTo === 'string') {
+            settings.appendTo = (0, _closest2.default)(this.tooltipDOM, this.props.appendTo) || document.body;
+          } else {
+            settings.appendTo = this.props.appendTo;
+          }
         }
 
         this.tippy = (0, _tippy2.default)(this.tooltipDOM, settings);
@@ -705,11 +713,11 @@ exports.default = followCursorHandler;
 
 var _globals = __webpack_require__(0);
 
-var _getCorePlacement = __webpack_require__(3);
+var _getCorePlacement = __webpack_require__(4);
 
 var _getCorePlacement2 = _interopRequireDefault(_getCorePlacement);
 
-var _find = __webpack_require__(2);
+var _find = __webpack_require__(3);
 
 var _find2 = _interopRequireDefault(_find);
 
@@ -717,7 +725,7 @@ var _prefix = __webpack_require__(1);
 
 var _prefix2 = _interopRequireDefault(_prefix);
 
-var _closest = __webpack_require__(4);
+var _closest = __webpack_require__(2);
 
 var _closest2 = _interopRequireDefault(_closest);
 
@@ -925,11 +933,11 @@ var _hideAllPoppers = __webpack_require__(25);
 
 var _hideAllPoppers2 = _interopRequireDefault(_hideAllPoppers);
 
-var _closest = __webpack_require__(4);
+var _closest = __webpack_require__(2);
 
 var _closest2 = _interopRequireDefault(_closest);
 
-var _find = __webpack_require__(2);
+var _find = __webpack_require__(3);
 
 var _find2 = _interopRequireDefault(_find);
 
@@ -1048,7 +1056,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createPopperElement;
 
-var _getCorePlacement = __webpack_require__(3);
+var _getCorePlacement = __webpack_require__(4);
 
 var _getCorePlacement2 = _interopRequireDefault(_getCorePlacement);
 
@@ -1179,7 +1187,7 @@ var _prefix = __webpack_require__(1);
 
 var _prefix2 = _interopRequireDefault(_prefix);
 
-var _getCorePlacement = __webpack_require__(3);
+var _getCorePlacement = __webpack_require__(4);
 
 var _getCorePlacement2 = _interopRequireDefault(_getCorePlacement);
 
@@ -1492,7 +1500,7 @@ var _isVisible = __webpack_require__(7);
 
 var _isVisible2 = _interopRequireDefault(_isVisible);
 
-var _closest = __webpack_require__(4);
+var _closest = __webpack_require__(2);
 
 var _closest2 = _interopRequireDefault(_closest);
 
@@ -1978,7 +1986,7 @@ var _prefix = __webpack_require__(1);
 
 var _prefix2 = _interopRequireDefault(_prefix);
 
-var _find = __webpack_require__(2);
+var _find = __webpack_require__(3);
 
 var _find2 = _interopRequireDefault(_find);
 
@@ -2564,7 +2572,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = cursorIsOutsideInteractiveBorder;
 
-var _getCorePlacement = __webpack_require__(3);
+var _getCorePlacement = __webpack_require__(4);
 
 var _getCorePlacement2 = _interopRequireDefault(_getCorePlacement);
 
@@ -2649,7 +2657,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = findIndex;
 
-var _find = __webpack_require__(2);
+var _find = __webpack_require__(3);
 
 var _find2 = _interopRequireDefault(_find);
 
