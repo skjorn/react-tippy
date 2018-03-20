@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import tippy from './js/tippy';
+import closest from './js/utils/closest';
 
 const defaultProps = {
   html: null,
@@ -223,7 +224,12 @@ class Tooltip extends Component {
         html: this.props.rawTemplate ? this.props.rawTemplate : undefined,
       };
       if (this.props.appendTo) {
-        settings.appendTo = this.props.appendTo;
+        if (typeof this.props.appendTo === 'string') {
+          settings.appendTo = closest(this.tooltipDOM, this.props.appendTo) || document.body;
+        }
+        else {
+          settings.appendTo = this.props.appendTo;
+        }
       }
 
       this.tippy = tippy(this.tooltipDOM, settings);
